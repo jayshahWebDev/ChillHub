@@ -2,7 +2,21 @@
 module.exports = {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
+      },
+      colors: {
+        lightGray: "#78909c",
+        serchButtonBg: "#f8f8f8",
+        lightWhite: "#f2f2f2",
+      },
+      screens: {
+        tablet: "481px",
+        laptop: "769px",
+        desktop: "1025px",
+      },
+    },
   },
-  plugins: [],
-}
+  plugins: [require("@tailwindcss/line-clamp")],
+};
