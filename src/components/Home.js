@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex border-[1px]">
+      <div className="flex ">
         <Sidebar />
         <VideoContainer />
       </div>

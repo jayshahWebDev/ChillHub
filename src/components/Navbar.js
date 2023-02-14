@@ -8,7 +8,8 @@ const Navbar = () => {
     dispatch(toggleMenu());
   };
   return (
-    <div className="flex justify-between items-center mx-[2%] mt-[2%] tablet:mt-[1%]">
+    <div className="sticky top-0 bg-white z-50 shadow-md">
+    <div className="flex justify-between items-center mx-[2%] h-[60px]">
       <div className="flex gap-x-[10px] items-center">
         <svg
           onClick={() => {
@@ -99,6 +100,7 @@ const Navbar = () => {
           <p className="font-Poppins font-semibold text-[20px] text-white">J</p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
