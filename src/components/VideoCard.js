@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { YOUTUBE_API_URL } from "../utils/constatnt";
 
 const VideoCard = ({ info }) => {
-  console.log("info::", info);
   const [channel, setChannel] = useState(null);
 
   const videoLength = info?.contentDetails?.duration
@@ -31,7 +30,6 @@ const VideoCard = ({ info }) => {
         (info?.statistics?.viewCount / 1000).toFixed(2)
       ) + "K";
   }
-  console.log("viewCount::", viewCount);
 
   const getChannelDetail = async () => {
     const options = {
@@ -46,8 +44,6 @@ const VideoCard = ({ info }) => {
     // console.log("channelDetailsJson::", channelDetailsJson);
     setChannel(channelDetailsJson);
   };
-
-  console.log("channel:::", channel);
 
   useEffect(() => {
     getChannelDetail();
