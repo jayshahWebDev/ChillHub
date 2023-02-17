@@ -1,15 +1,15 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
-import VideoContainer from "./VideoContainer";
 
 const Home = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex ">
+      <div className="flex">
         <Sidebar />
-        <VideoContainer />
+        <Outlet />
       </div>
     </div>
   );
