@@ -1,6 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu } from "../utils/appSlice";
+import {
+  selectCategory,
+  setVideoCategory,
+  toggleMenu,
+} from "../utils/appSlice";
 import { categories } from "../utils/constatnt";
 import SidebarItem from "./SidebarItem";
 
@@ -15,7 +19,10 @@ const Sidebar = () => {
     dispatch(toggleMenu());
   };
 
-  console.log("ismenuOpen::", ismenuOpen);
+  const selectedCategory = useSelector((store) => store.app.selectedCategory);
+  // console.log("selectedCategory::::", selectedCategory);
+
+  // console.log("ismenuOpen::", ismenuOpen);
   if (!ismenuOpen) return null;
 
   return (
@@ -49,7 +56,15 @@ const Sidebar = () => {
 
       <div className="mt-[4%]">
         {categories.map((category) => (
-          <SidebarItem name={category.name} />
+          <div
+            key={category.name}
+            onClick={() => {
+              dispatch(selectCategory(category.name));
+              dispatch(setVideoCategory(category.videoCategoryId));
+            }}
+          >
+            <SidebarItem name={category.name} category={selectedCategory} />
+          </div>
         ))}
       </div>
     </div>

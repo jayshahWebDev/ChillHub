@@ -6,29 +6,31 @@ import VideoCard from "./VideoCard";
 const VideoContainer = () => {
   const [videos, setVideos] = useState(null);
   const [videoInfo, setVideoInfo] = useState(null);
-  const [pageToken, setPageToken] = useState(null);
-
-  console.log("videos::", videos?.nextPageToken);
+  const [pageToken, setPageToken] = useState("");
+  console.log("pageToken::", pageToken);
 
   const ismenuOpen = useSelector((store) => store.app.ismenuOpen);
+  const videoCategory = useSelector((store) => store.app.videoCategory);
+
+  console.log("videoCategory::", videoCategory);
 
   const getVideoData = async () => {
-    console.log("getVideoDatagetVideoDatagetVideoData");
     let options = {
       part: "snippet,contentDetails,statistics",
       chart: "mostPopular",
       maxResults: 20,
       regionCode: "IN",
       key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      // pageToken,
     };
 
-    options = pageToken ? { ...options, pageToken } : options;
+    // options = pageToken ? { ...options, pageToken } : options;
 
     const videoData = await fetch(
       `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
     );
     const videoJson = await videoData.json();
-    console.log("videoJson::", videoJson);
+    // console.log("videoJson::", videoJson);
     setVideos(videoJson);
     setVideoInfo((prev) =>
       prev ? [...prev, ...videoJson?.items] : videoJson?.items
@@ -39,16 +41,22 @@ const VideoContainer = () => {
     getVideoData();
   }, [pageToken]);
 
-  useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.innerHeight + document.documentElement.scrollTop >= 2745) {
-        console.log("videos?.nextPageToken:::", videos);
-        setPageToken(videos?.nextPageToken);
-      }
-    });
+  // useEffect(() => {
+  //   window.addEventListener("scroll", () => {
+  //     if (
+  //       window.innerHeight + document.documentElement.scrollTop >=
+  //       document.documentElement.scrollHeight
+  //     ) {
+  //       // console.log("videos?.nextPageToken:::", videos);
+  //       // setPageToken(videos?.nextPageToken);
+  //       setVideos((prev) => prev);
+  //       console.log("videos?.nextPageToken:::", videos);
+  //       // setPageToken(videos?.nextPageToken);
+  //     }
+  //   });
 
-    // return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  //   // return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
 
   return (
     <div
@@ -57,10 +65,8 @@ const VideoContainer = () => {
       } mt-[2%] flex flex-wrap justify-center gap-x-[20px] gap-y-[20px]`}
     >
       {videoInfo?.map((videoInfo) => (
-        <VideoCard info={videoInfo} />
+        <VideoCard key={videoInfo.id} info={videoInfo} />
       ))}
-
-      {/* <VideoCard info={videos?.items?.[0]} /> */}
     </div>
   );
 };

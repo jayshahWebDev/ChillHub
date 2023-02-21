@@ -29,7 +29,7 @@ const RelatedVideo = () => {
   }, [searchParams]);
 
   return (
-    <div className="w-[25%]">
+    <div className="laptop:w-[25%]">
       {relatedVideo?.map((videoInfo) => (
         <RelatedVideoCard key={videoInfo?.id?.videoId} info={videoInfo} />
       ))}
