@@ -6,6 +6,7 @@ const appSlice = createSlice({
     ismenuOpen: false,
     selectedCategory: "Home",
     videoCategory: "",
+    pageToken: null,
   },
   reducers: {
     toggleMenu: (state) => {
@@ -17,10 +18,17 @@ const appSlice = createSlice({
     setVideoCategory: (state, action) => {
       state.videoCategory = action.payload;
     },
+    setNextPageToken: (state, action) => {
+      state.pageToken = action.payload;
+    },
   },
 });
 
-export const { toggleMenu, selectCategory, setVideoCategory } =
-  appSlice.actions;
+export const {
+  toggleMenu,
+  selectCategory,
+  setVideoCategory,
+  setNextPageToken,
+} = appSlice.actions;
 
 export default appSlice.reducer;
