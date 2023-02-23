@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setNextPageToken } from "../utils/appSlice";
 import { YOUTUBE_API_URL } from "../utils/constatnt";
+import useInfiniteScrolling from "../utils/useInfiniteScrolling";
 import VideoCard from "./VideoCard";
 
 const VideoContainer = () => {
@@ -33,29 +34,35 @@ const VideoContainer = () => {
     setVideoInfo((prev) =>
       prev ? [...prev, ...videoJson?.items] : videoJson?.items
     );
-    dispatch(setNextPageToken(videoJson?.nextPageToken));
+    // dispatch(setNextPageToken(videoJson?.nextPageToken));
   };
 
-  const nextPageToken = useSelector((store) => store.app.pageToken);
+  // const nextPageToken = useSelector((store) => store.app.pageToken);
 
   useEffect(() => {
     getVideoData();
   }, [pageToken]);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.scrollHeight
-    ) {
-      if (nextPageToken) setPageToken(nextPageToken);
-    }
-  };
+  // console.log("videos?.nextPageToken::",videos?.nextPageToken);
+  const tokenFromHook = useInfiniteScrolling();
+  console.log("tokenFromHook:", tokenFromHook);
+  tokenFromHook ? setPageToken(videos?.nextPageToken) : null;
+  // if (tokenFromHook) setPageToken(tokenFromHook);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+  // const handleScroll = () => {
+  //   if (
+  //     window.innerHeight + document.documentElement.scrollTop >=
+  //     document.documentElement.scrollHeight
+  //   ) {
+  //     if (nextPageToken) setPageToken(nextPageToken);
+  //   }
+  // };
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [nextPageToken]);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, [nextPageToken]);
 
   return (
     <div
