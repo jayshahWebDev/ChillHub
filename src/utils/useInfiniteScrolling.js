@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 
 const useInfiniteScrolling = () => {
+  console.log("useInfiniteScrolling");
   // console.log("InfiniteScrolling::", token);
   const [fetchApi, setFetchApi] = useState(false);
   //   console.log("InfiniteScrolling   pageToken:::", pageToken);
   const handleScroll = () => {
+    console.log("handleScroll")
+    if (fetchApi) {
+      console.log("inside if fetch")
+      setFetchApi(false);
+      return
+    }
     if (
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.scrollHeight
@@ -12,12 +19,14 @@ const useInfiniteScrolling = () => {
       // console.log("hit bottom", token);
       // setPageToken(token);
 
-      console.log("inside if fetchApi",fetchApi);
+      console.log("inside if fetchApi", fetchApi);
       setFetchApi(true);
-    } else if (fetchApi) {
-      console.log("inside else if fetchApi",fetchApi);
-      setFetchApi(false);
     }
+
+    // else if (fetchApi) {
+    //   console.log("inside else if fetchApi",fetchApi);
+    //   setFetchApi(false);
+    // }
   };
 
   useEffect(() => {

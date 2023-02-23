@@ -40,6 +40,7 @@ const VideoContainer = () => {
   // const nextPageToken = useSelector((store) => store.app.pageToken);
 
   useEffect(() => {
+    console.log("inside useeffect videoContainer")
     getVideoData();
   }, [pageToken]);
 
@@ -47,6 +48,7 @@ const VideoContainer = () => {
   const tokenFromHook = useInfiniteScrolling();
   console.log("tokenFromHook:", tokenFromHook);
   tokenFromHook ? setPageToken(videos?.nextPageToken) : null;
+  console.log("after code")
   // if (tokenFromHook) setPageToken(tokenFromHook);
 
   // const handleScroll = () => {
