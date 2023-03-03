@@ -1,16 +1,8 @@
 export const categories = [
-  { name: "Home" },
-  {
-    name: "Shorts",
-    videoCategoryId: "42",
-  },
+  { name: "Home", videoCategoryId: "0" },
   {
     name: "Music",
     videoCategoryId: "10",
-  },
-  {
-    name: "Films",
-    videoCategoryId: "30",
   },
   {
     name: "Gaming",
@@ -23,6 +15,10 @@ export const categories = [
   {
     name: "Sport",
     videoCategoryId: "17",
+  },
+  {
+    name: "Vlog",
+    videoCategoryId: "22",
   },
 ];
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { YOUTUBE_API_URL } from "../utils/constatnt";
+import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import ChannelDetailCard from "./ChannelDetailCard";
 import ChannelSection from "./ChannelSection";
 

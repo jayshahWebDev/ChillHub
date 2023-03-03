@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { YOUTUBE_API_URL } from "../utils/constatnt";
-import { viewSubCount } from "../utils/commonFunctions";
+import { YOUTUBE_API_URL } from "../../utils/constatnt";
+import { viewSubCount } from "../../utils/commonFunctions";
 
 const FeatureChannelSection = () => {
   const [featureChannel, setFeatureChannel] = useState(null);
@@ -32,9 +32,15 @@ const FeatureChannelSection = () => {
 
   return (
     <div className="mt-[2%] laptop:mt-[1%] tablet:flex tablet:gap-x-[25px]">
-      {featureChannel?.[0]?.contentDetails?.channels?.map((id) => (
-        <ChannelCard key={id} id={id} />
-      ))}
+      {featureChannel && featureChannel.length > 0 ? (
+        featureChannel?.[0]?.contentDetails?.channels?.map((id) => (
+          <ChannelCard key={id} id={id} />
+        ))
+      ) : (
+        <div className="font-Poppins flex justify-center items-center w-full">
+          <p>This channel doesn't feature any other channels.</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { viewSubCount } from "../utils/commonFunctions";
-import { YOUTUBE_API_URL } from "../utils/constatnt";
+import { Link, useNavigate } from "react-router-dom";
+import { viewSubCount } from "../../utils/commonFunctions";
+import { YOUTUBE_API_URL } from "../../utils/constatnt";
 
 const VideoCard = ({ info }) => {
   const [channel, setChannel] = useState(null);
   // console.log("info::", info);
+  const navigate = useNavigate();
 
   const videoLength = info?.contentDetails?.duration
     ?.replace("PT", "")
@@ -16,7 +17,7 @@ const VideoCard = ({ info }) => {
 
   const videoPublishDate = moment(info?.snippet?.publishedAt).fromNow();
 
-  const viewCount = viewSubCount(info?.statistics?.viewCount)
+  const viewCount = viewSubCount(info?.statistics?.viewCount);
 
   // let viewCount;
   // if (info?.statistics?.viewCount >= 1000000000) {
@@ -69,12 +70,16 @@ const VideoCard = ({ info }) => {
         </div>
         <div className="flex gap-x-[10px]">
           <div>
-            <Link to={`/channel/${info?.snippet?.channelId}`}>
-              <img
-                src={channel?.items?.[0]?.snippet?.thumbnails?.high?.url}
-                className="h-[40px] w-[40px] rounded-full border-[1px]"
-              />
-            </Link>
+            {/* <Link to={`/channel/${info?.snippet?.channelId}`}> */}
+            <img
+              src={channel?.items?.[0]?.snippet?.thumbnails?.high?.url}
+              className="h-[40px] w-[40px] rounded-full border-[1px]"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(`channel/${info?.snippet?.channelId}`);
+              }}
+            />
+            {/* </Link> */}
           </div>
           <div className="flex flex-col gap-y-[5px]">
             <p className="line-clamp-2 w-[240px] text-[15px] font-medium">

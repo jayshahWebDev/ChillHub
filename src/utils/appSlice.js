@@ -5,7 +5,7 @@ const appSlice = createSlice({
   initialState: {
     ismenuOpen: false,
     selectedCategory: "Home",
-    videoCategory: "",
+    videoCategory: "0",
     pageToken: null,
   },
   reducers: {

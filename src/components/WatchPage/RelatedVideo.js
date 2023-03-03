@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { YOUTUBE_API_URL } from "../utils/constatnt";
+import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import RelatedVideoCard from "./RelatedVideoCard";
 
 const RelatedVideo = () => {

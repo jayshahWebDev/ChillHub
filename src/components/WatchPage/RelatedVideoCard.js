@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { viewSubCount } from "../utils/commonFunctions";
-import { YOUTUBE_API_URL } from "../utils/constatnt";
+import { viewSubCount } from "../../utils/commonFunctions";
+import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import moment from "moment";
 import { Link } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import { viewSubCount } from "../utils/commonFunctions";
+import { viewSubCount } from "../../utils/commonFunctions";
 
 const ChannelDetailCard = ({ channelInfo }) => {
   const getSubCount = viewSubCount(
