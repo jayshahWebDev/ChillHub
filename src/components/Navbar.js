@@ -18,7 +18,6 @@ const Navbar = () => {
       `http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`
     );
     let jsonData = await data.json();
-    console.log("jsonData::", jsonData[1]);
     setSuggestionSearch(jsonData?.[1]);
   };
 

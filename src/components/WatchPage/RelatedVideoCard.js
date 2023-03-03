@@ -6,12 +6,10 @@ import { Link } from "react-router-dom";
 
 const RelatedVideoCard = ({ info }) => {
   const [statistics, setStatistics] = useState(null);
-//   console.log("info:::", info);
 
   const getVideoStatistics = async () => {
     const options = {
       part: "statistics",
-      //   part: "snippet,contentDetails,statistics",
       id: info?.id?.videoId,
       key: process.env.REACT_APP_YOUTUBE_API_KEY,
     };
@@ -19,7 +17,6 @@ const RelatedVideoCard = ({ info }) => {
       `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
     );
     const jsonData = await data.json();
-    // console.log("jso::::", jsonData);
     setStatistics(jsonData);
   };
 

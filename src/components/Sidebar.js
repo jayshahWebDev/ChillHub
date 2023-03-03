@@ -20,9 +20,6 @@ const Sidebar = () => {
   };
 
   const selectedCategory = useSelector((store) => store.app.selectedCategory);
-  // console.log("selectedCategory::::", selectedCategory);
-
-  // console.log("ismenuOpen::", ismenuOpen);
   if (!ismenuOpen) return null;
 
   return (

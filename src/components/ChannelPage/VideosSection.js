@@ -23,7 +23,6 @@ const VideosSection = () => {
     );
     const jsonData = await data.json();
     setChannelVideos(jsonData);
-    console.log("jsonData:::", jsonData);
   };
 
   useEffect(() => {
@@ -78,15 +77,12 @@ const VideoSectionCard = ({ info }) => {
       `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
     );
     const jsonData = await data.json();
-    console.log("jsonData:::", jsonData);
     setVideoStatics(jsonData);
   };
 
   useEffect(() => {
     getVideoStatics();
   }, []);
-
-  // if (!videoStatics) return null;
 
   const videoLength = videoStatics?.items?.[0]?.contentDetails?.duration
     ?.replace("PT", "")
@@ -95,15 +91,9 @@ const VideoSectionCard = ({ info }) => {
     .replace("S", "");
 
   const videoPublishDate = moment(info?.snippet?.publishedAt).fromNow();
-console.log("videoStatics?.itesm?.[0]::",videoStatics?.itesm?.[0]);
   const viewCount = viewSubCount(
     videoStatics?.items?.[0]?.statistics?.viewCount
   );
-  // console.log(
-  //   "    videoStatics?.itesm?.[0]?.statistics?.viewCount:::",
-  //   videoStatics?.itesm?.[0]?.statistics?.viewCount
-  // );
-  // console.log("viewCount:::", viewCount);
 
   return (
     <div>

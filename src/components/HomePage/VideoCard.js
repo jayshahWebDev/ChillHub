@@ -6,7 +6,6 @@ import { YOUTUBE_API_URL } from "../../utils/constatnt";
 
 const VideoCard = ({ info }) => {
   const [channel, setChannel] = useState(null);
-  // console.log("info::", info);
   const navigate = useNavigate();
 
   const videoLength = info?.contentDetails?.duration
@@ -19,24 +18,6 @@ const VideoCard = ({ info }) => {
 
   const viewCount = viewSubCount(info?.statistics?.viewCount);
 
-  // let viewCount;
-  // if (info?.statistics?.viewCount >= 1000000000) {
-  //   viewCount =
-  //     new Intl.NumberFormat().format(
-  //       (info?.statistics?.viewCount / 1000000000).toFixed(2)
-  //     ) + "B";
-  // } else if (info?.statistics?.viewCount >= 1000000) {
-  //   viewCount =
-  //     new Intl.NumberFormat().format(
-  //       (info?.statistics?.viewCount / 1000000).toFixed(2)
-  //     ) + "M";
-  // } else if (info?.statistics?.viewCount >= 1000) {
-  //   viewCount =
-  //     new Intl.NumberFormat().format(
-  //       (info?.statistics?.viewCount / 1000).toFixed(2)
-  //     ) + "K";
-  // }
-
   const getChannelDetail = async () => {
     const options = {
       part: "snippet,contentDetails,statistics",
@@ -47,7 +28,6 @@ const VideoCard = ({ info }) => {
       `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
     );
     const channelDetailsJson = await channelDetails.json();
-    // console.log("channelDetailsJson::", channelDetailsJson);
     setChannel(channelDetailsJson);
   };
 
