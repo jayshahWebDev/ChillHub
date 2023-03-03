@@ -70,16 +70,14 @@ const VideoCard = ({ info }) => {
         </div>
         <div className="flex gap-x-[10px]">
           <div>
-            {/* <Link to={`/channel/${info?.snippet?.channelId}`}> */}
             <img
               src={channel?.items?.[0]?.snippet?.thumbnails?.high?.url}
               className="h-[40px] w-[40px] rounded-full border-[1px]"
               onClick={(e) => {
                 e.preventDefault();
-                navigate(`channel/${info?.snippet?.channelId}`);
+                navigate(`channel/${info?.snippet?.channelId}/home`);
               }}
             />
-            {/* </Link> */}
           </div>
           <div className="flex flex-col gap-y-[5px]">
             <p className="line-clamp-2 w-[240px] text-[15px] font-medium">
