@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { toggleMenu, toggleMobileSearchBar } from "../utils/appSlice";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionSearch, setSuggestionSearch] = useState(null);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [search] = useSearchParams();
 
   const isMobileSearchOpen = useSelector((store) => {
     return store.app.isMobileSearchBarOpen;
@@ -25,6 +26,10 @@ const Navbar = () => {
     let jsonData = await data.json();
     setSuggestionSearch(jsonData?.[1]);
   };
+
+  useEffect(() => {
+    if (search.get("q")) setSearchQuery(search.get("q"));
+  }, []);
 
   useEffect(() => {
     if (!showSuggestion) return;
@@ -75,6 +80,7 @@ const Navbar = () => {
                 className="px-[10px] py-[5px] w-[80%] rounded-l-full outline-none focus:border-blue-400 border-[1px]"
                 value={searchQuery}
                 onChange={(e) => {
+                  setShowSuggestion(true);
                   setSearchQuery(e.target.value);
                 }}
               />
@@ -87,6 +93,7 @@ const Navbar = () => {
                       key={index}
                       onClick={(e) => {
                         setSearchQuery(query);
+                        setShowSuggestion(false);
                         dispatch(toggleMobileSearchBar());
                       }}
                     >
