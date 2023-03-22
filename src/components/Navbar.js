@@ -6,7 +6,7 @@ import { toggleMenu, toggleMobileSearchBar } from "../utils/appSlice";
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionSearch, setSuggestionSearch] = useState(null);
-  // const [showSuggestion, setShowSuggestion] = useState(true);
+  const [showSuggestion, setShowSuggestion] = useState(false);
 
   const isMobileSearchOpen = useSelector((store) => {
     return store.app.isMobileSearchBarOpen;
@@ -27,6 +27,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    if (!showSuggestion) return;
     const timer = setTimeout(() => getSuggestionOfSearch(), 200);
 
     return () => {
@@ -97,11 +98,14 @@ const Navbar = () => {
                 </div>
               )}
 
-              <div className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg">
+              <Link
+                to={`search?q=${searchQuery}`}
+                className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg"
+              >
                 <svg viewBox="0 0 24 24" className="h-[25px]">
                   <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path>
                 </svg>
-              </div>
+              </Link>
             </div>
           </div>
         )}
@@ -113,6 +117,9 @@ const Navbar = () => {
             className="px-[10px] py-[5px] outline-none focus:border-blue-400 border-[1px] w-[350px] rounded-l-full desktop:w-[450px]"
             value={searchQuery}
             onChange={(e) => {
+              if (!showSuggestion) {
+                setShowSuggestion(true);
+              }
               setSearchQuery(e.target.value);
             }}
           />
@@ -131,27 +138,25 @@ const Navbar = () => {
           {/* <div className="absolute w-[350px] desktop:w-[450px] flex justify-center items-center top-9 rounded-[10px]">
           <div className="bg-white shadow-lg w-[340px] desktop:w-[440px] border-[1px] h-[50px] rounded-[10px]"></div>
           </div> */}
-          {suggestionSearch &&
-            // showSuggestion &&
-            suggestionSearch.length > 0 && (
-              <div className="absolute top-9 bg-white w-[350px] desktop:w-[450px] py-2 border rounded-md shadow-md">
-                {suggestionSearch.map((query, index) => (
-                  <Link
-                    to={`search?q=${query}`}
-                    key={index}
-                    onClick={() => {
-                      // setShowSuggestion(false);
-                      setSearchQuery(query);
-                      setSuggestionSearch(null);
-                    }}
-                  >
-                    <div className="hover:bg-gray-200 py-1 px-3 cursor-context-menu">
-                      {query}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+          {suggestionSearch && suggestionSearch.length > 0 && (
+            <div className="absolute top-9 bg-white w-[350px] desktop:w-[450px] py-2 border rounded-md shadow-md">
+              {suggestionSearch.map((query, index) => (
+                <Link
+                  to={`search?q=${query}`}
+                  key={index}
+                  onClick={() => {
+                    setSearchQuery(query);
+                    setShowSuggestion(false);
+                    setSuggestionSearch(null);
+                  }}
+                >
+                  <div className="hover:bg-gray-200 py-1 px-3 cursor-context-menu">
+                    {query}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex gap-x-[10px] items-center">
