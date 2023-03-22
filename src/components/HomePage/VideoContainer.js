@@ -23,7 +23,10 @@ const VideoContainer = () => {
   };
 
   async function moreData() {
-    if (!pageToken) return;
+    if (!pageToken) {
+      setIsFetching(false);
+      return;
+    }
     options = { ...options, pageToken };
     const videoData = await fetch(
       `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
@@ -46,15 +49,18 @@ const VideoContainer = () => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0 });
     getVideoData();
-  }, []);
+  }, [videoCategory]);
 
   return !videoInfo && !videos ? (
     <h1>Loading</h1>
   ) : (
     <div
       className={`mx-[2%] ${
-        ismenuOpen ? "w-full desktop:w-[85%]" : "w-full"
+        ismenuOpen
+          ? "w-full desktop:w-[85%] pointer-events-none desktop:pointer-events-auto"
+          : "w-full"
       } mt-[2%] flex flex-wrap justify-center gap-x-[20px] gap-y-[20px]`}
     >
       {videoInfo?.map((videoInfo) => (

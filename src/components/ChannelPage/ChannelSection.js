@@ -5,7 +5,7 @@ const ChannelSection = () => {
 
   return (
     <div className="mt-[10px]">
-      <div className="flex gap-x-[20px] font-Poppins">
+      <div className="flex gap-x-[20px] font-Roboto">
         <Link to={`/channel/${id}/home`}>
           <p
             className={`${

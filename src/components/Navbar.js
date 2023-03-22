@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { json, Link } from "react-router-dom";
-import { toggleMenu } from "../utils/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { toggleMenu, toggleMobileSearchBar } from "../utils/appSlice";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionSearch, setSuggestionSearch] = useState(null);
+  // const [showSuggestion, setShowSuggestion] = useState(true);
+
+  const isMobileSearchOpen = useSelector((store) => {
+    return store.app.isMobileSearchBarOpen;
+  });
 
   const dispatch = useDispatch();
 
@@ -15,7 +20,7 @@ const Navbar = () => {
 
   const getSuggestionOfSearch = async () => {
     let data = await fetch(
-      `http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`
+      `https://corsanywhere.herokuapp.com/http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`
     );
     let jsonData = await data.json();
     setSuggestionSearch(jsonData?.[1]);
@@ -52,7 +57,7 @@ const Navbar = () => {
               >
                 <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
               </svg>
-              <p className="font-Poppins font-semibold tracking-tight text-[20px]">
+              <p className="font-Roboto font-semibold tracking-tight text-[20px]">
                 Youtube
               </p>
             </div>
@@ -60,25 +65,46 @@ const Navbar = () => {
         </div>
 
         {/* ONLY FOR MOBILE */}
-        {/* <div className="laptop:hidden absolute w-[96%] mx-0 h-[50px] bg-white mt-[2%] tablet:mt-[1%]">
-        <div className="relative flex justify-center">
-          <input
-            type="text"
-            placeholder="Search"
-            className="px-[10px] py-[5px] border-[1px] w-[80%] rounded-l-full"
-          />
+        {isMobileSearchOpen && (
+          <div className="laptop:hidden absolute w-[96%] mx-0 h-[50px] bg-white mt-[2%] tablet:mt-[1%]">
+            <div className="relative flex justify-center">
+              <input
+                type="text"
+                placeholder="Search"
+                className="px-[10px] py-[5px] w-[80%] rounded-l-full outline-none focus:border-blue-400 border-[1px]"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                }}
+              />
 
-          <div className="absolute w-[80%] left-[5%] tablet:left-[7%] flex justify-center items-center top-9 rounded-[10px]">
-            <div className="bg-white shadow-lg w-full border-[1px] h-[50px] rounded-[10px]"></div>
-          </div>
+              {suggestionSearch && suggestionSearch.length > 0 && (
+                <div className="absolute w-[80%] left-[5%] tablet:left-[7%] flex flex-col bg-white py-2 border shadow-md top-9 rounded-md">
+                  {suggestionSearch.map((query, index) => (
+                    <Link
+                      to={`search?q=${query}`}
+                      key={index}
+                      onClick={(e) => {
+                        setSearchQuery(query);
+                        dispatch(toggleMobileSearchBar());
+                      }}
+                    >
+                      <div className="hover:bg-gray-200 py-1 px-3 cursor-context-menu">
+                        {query}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
 
-          <div className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg">
-            <svg viewBox="0 0 24 24" className="h-[25px]">
-              <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path>
-            </svg>
+              <div className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg">
+                <svg viewBox="0 0 24 24" className="h-[25px]">
+                  <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path>
+                </svg>
+              </div>
+            </div>
           </div>
-        </div>
-      </div> */}
+        )}
 
         <div className="hidden relative laptop:flex">
           <input
@@ -90,32 +116,51 @@ const Navbar = () => {
               setSearchQuery(e.target.value);
             }}
           />
-          <div className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg cursor-pointer">
+          <Link
+            to={`search?q=${searchQuery}`}
+            onClick={() => {
+              setSuggestionSearch(null);
+            }}
+            className="border-[1px] flex justify-center items-center px-[10px] rounded-r-full bg-serchButtonBg cursor-pointer"
+          >
             <svg viewBox="0 0 24 24" className="h-[25px]">
               <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path>
             </svg>
-          </div>
+          </Link>
 
           {/* <div className="absolute w-[350px] desktop:w-[450px] flex justify-center items-center top-9 rounded-[10px]">
           <div className="bg-white shadow-lg w-[340px] desktop:w-[440px] border-[1px] h-[50px] rounded-[10px]"></div>
           </div> */}
-          {suggestionSearch && suggestionSearch.length > 0 && (
-            <div className="absolute top-9 bg-white w-[350px] desktop:w-[450px] py-2 border rounded-md shadow-md">
-              {suggestionSearch.map((query, index) => (
-                <Link to={`search?q=${query}`} key={index}>
-                  <div className="hover:bg-gray-200 py-1 px-3 cursor-context-menu">
-                    {query}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
+          {suggestionSearch &&
+            // showSuggestion &&
+            suggestionSearch.length > 0 && (
+              <div className="absolute top-9 bg-white w-[350px] desktop:w-[450px] py-2 border rounded-md shadow-md">
+                {suggestionSearch.map((query, index) => (
+                  <Link
+                    to={`search?q=${query}`}
+                    key={index}
+                    onClick={() => {
+                      // setShowSuggestion(false);
+                      setSearchQuery(query);
+                      setSuggestionSearch(null);
+                    }}
+                  >
+                    <div className="hover:bg-gray-200 py-1 px-3 cursor-context-menu">
+                      {query}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
         </div>
 
         <div className="flex gap-x-[10px] items-center">
           <svg
             viewBox="0 0 24 24"
             className="h-[30px] laptop:hidden cursor-pointer"
+            onClick={() => {
+              dispatch(toggleMobileSearchBar());
+            }}
           >
             <path d="M20.87,20.17l-5.59-5.59C16.35,13.35,17,11.75,17,10c0-3.87-3.13-7-7-7s-7,3.13-7,7s3.13,7,7,7c1.75,0,3.35-0.65,4.58-1.71 l5.59,5.59L20.87,20.17z M10,16c-3.31,0-6-2.69-6-6s2.69-6,6-6s6,2.69,6,6S13.31,16,10,16z"></path>
           </svg>
@@ -135,7 +180,7 @@ const Navbar = () => {
           </svg>
 
           <div className="h-[35px] w-[35px] rounded-full bg-lightGray flex justify-center items-center cursor-pointer">
-            <p className="font-Poppins font-semibold text-[20px] text-white">
+            <p className="font-Roboto font-semibold text-[20px] text-white">
               J
             </p>
           </div>

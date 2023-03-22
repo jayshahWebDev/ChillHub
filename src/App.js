@@ -7,7 +7,7 @@ import store from "./utils/store";
 import ChannelPage from "./components/ChannelPage/ChannelPage";
 import WatchVideo from "./components/WatchPage/WatchVideo";
 import VideoContainer from "./components/HomePage/VideoContainer";
-import SearchVideo from "./components/SearchVideo";
+import SearchVideo from "./components/SerachResultPage/SearchVideo";
 import HomeSection from "./components/ChannelPage/HomeSection";
 import VideosSection from "./components/ChannelPage/VideosSection";
 import FeatureChannelSection from "./components/ChannelPage/FeatureChannelSection";

@@ -29,7 +29,7 @@ const RelatedVideoCard = ({ info }) => {
 
   return (
     <Link to={`/watch?v=${info?.id?.videoId}`}>
-      <div className="mt-[10px] font-Poppins desktop:flex gap-x-[5px]">
+      <div className="mt-[10px] font-Roboto desktop:flex gap-x-[5px]">
         <div className="w-full desktop:w-[40%]">
           <img
             src={info?.snippet?.thumbnails?.high?.url}

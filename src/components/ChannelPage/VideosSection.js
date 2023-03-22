@@ -98,7 +98,7 @@ const VideoSectionCard = ({ info }) => {
   return (
     <div>
       <Link to={`/watch?v=${info?.id?.videoId}`}>
-        <div className="flex flex-col gap-y-[10px] font-Poppins cursor-pointer">
+        <div className="flex flex-col gap-y-[10px] font-Roboto cursor-pointer">
           <div className="relative">
             <img
               src={info?.snippet?.thumbnails?.high?.url}

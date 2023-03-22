@@ -5,7 +5,7 @@ const ChannelDetailCard = ({ channelInfo }) => {
     channelInfo?.items?.[0]?.statistics?.subscriberCount
   );
   return (
-    <div className="font-Poppins">
+    <div className="font-Roboto">
       <div>
         <img
           src={

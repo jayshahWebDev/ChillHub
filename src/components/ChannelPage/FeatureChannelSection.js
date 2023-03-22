@@ -37,7 +37,7 @@ const FeatureChannelSection = () => {
           <ChannelCard key={id} id={id} />
         ))
       ) : (
-        <div className="font-Poppins flex justify-center items-center w-full">
+        <div className="font-Roboto flex justify-center items-center w-full">
           <p>This channel doesn't feature any other channels.</p>
         </div>
       )}
@@ -76,7 +76,7 @@ export const ChannelCard = ({ id }) => {
           src={channelDetail?.snippet?.thumbnails?.high?.url}
         />
       </div>
-      <div className="font-Poppins">
+      <div className="font-Roboto">
         <p className="text-[15px] tablet:text-center">
           {channelDetail?.snippet?.title}
         </p>

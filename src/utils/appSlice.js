@@ -6,6 +6,7 @@ const appSlice = createSlice({
     ismenuOpen: false,
     selectedCategory: "Home",
     videoCategory: "0",
+    isMobileSearchBarOpen: false,
   },
   reducers: {
     toggleMenu: (state) => {
@@ -17,10 +18,17 @@ const appSlice = createSlice({
     setVideoCategory: (state, action) => {
       state.videoCategory = action.payload;
     },
+    toggleMobileSearchBar: (state) => {
+      state.isMobileSearchBarOpen = !state.isMobileSearchBarOpen;
+    },
   },
 });
 
-export const { toggleMenu, selectCategory, setVideoCategory } =
-  appSlice.actions;
+export const {
+  toggleMenu,
+  selectCategory,
+  setVideoCategory,
+  toggleMobileSearchBar,
+} = appSlice.actions;
 
 export default appSlice.reducer;

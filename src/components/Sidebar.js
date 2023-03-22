@@ -23,8 +23,8 @@ const Sidebar = () => {
   if (!ismenuOpen) return null;
 
   return (
-    <div className="absolute top-0 desktop:sticky desktop:top-[calc(2%+60px)] h-[100%] desktop:mt-[2%] z-50 bg-white w-[44%] tablet:w-[30%] laptop:w-[25%] desktop:w-[15%]">
-      <div className="desktop:hidden">
+    <div className="fixed top-[60px] desktop:sticky desktop:top-[calc(2%+60px)] h-[100%] desktop:mt-[2%] z-50 bg-white w-[44%] tablet:w-[30%] laptop:w-[25%] desktop:w-[15%]">
+      {/* <div className="desktop:hidden">
         <div className=" flex gap-x-[10px] items-center ml-[7%] tablet:ml-[7%] laptop:ml-[8%] h-[60px]">
           <svg
             onClick={() => {
@@ -49,7 +49,7 @@ const Sidebar = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="mt-[4%]">
         {categories.map((category) => (
@@ -60,7 +60,12 @@ const Sidebar = () => {
               dispatch(setVideoCategory(category.videoCategoryId));
             }}
           >
-            <SidebarItem name={category.name} category={selectedCategory} />
+            <SidebarItem
+              name={category?.name}
+              category={selectedCategory}
+              path={category?.path}
+              selectedPath={category?.selcted}
+            />
           </div>
         ))}
       </div>
