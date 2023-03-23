@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { toggleMenu, toggleMobileSearchBar } from "../utils/appSlice";
+import { caching } from "../utils/searchSlice";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,6 +16,8 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
 
+  const searchCache = useSelector((store) => store.search);
+
   const toggleSideBar = () => {
     dispatch(toggleMenu());
   };
@@ -25,6 +28,7 @@ const Navbar = () => {
     );
     let jsonData = await data.json();
     setSuggestionSearch(jsonData?.[1]);
+    dispatch(caching({ [searchQuery]: jsonData?.[1] }));
   };
 
   useEffect(() => {
@@ -33,7 +37,11 @@ const Navbar = () => {
 
   useEffect(() => {
     if (!showSuggestion) return;
-    const timer = setTimeout(() => getSuggestionOfSearch(), 200);
+    const timer = setTimeout(() => {
+      searchCache[searchQuery]
+        ? setSuggestionSearch(searchCache[searchQuery])
+        : getSuggestionOfSearch();
+    }, 200);
 
     return () => {
       clearTimeout(timer);
