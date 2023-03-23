@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { viewSubCount } from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import moment from "moment";
+import VideoSectionShimmer from "./VideoSectionShimmer";
 
 const VideosSection = () => {
   const [videoSort, setVideoSort] = useState("date");
@@ -33,7 +34,10 @@ const VideosSection = () => {
     <div className="mt-[2%] laptop:mt-[1%]">
       <div className="flex gap-x-[20px]">
         <button
-          onClick={() => setVideoSort("date")}
+          onClick={() => {
+            setChannelVideos(null);
+            setVideoSort("date");
+          }}
           className={`${
             videoSort === "date"
               ? "bg-black text-white"
@@ -44,7 +48,10 @@ const VideosSection = () => {
         </button>
 
         <button
-          onClick={() => setVideoSort("viewCount")}
+          onClick={() => {
+            setChannelVideos(null);
+            setVideoSort("viewCount");
+          }}
           className={`${
             videoSort === "viewCount"
               ? "bg-black text-white"
@@ -54,11 +61,15 @@ const VideosSection = () => {
           Popular
         </button>
       </div>
-      <div className="flex mt-[2%] justify-center items-center flex-wrap gap-x-[20px] gap-y-[20px]">
-        {channelVideos?.items?.map((videoInfo) => (
-          <VideoSectionCard key={videoInfo?.id?.videoId} info={videoInfo} />
-        ))}
-      </div>
+      {!channelVideos ? (
+        <VideoSectionShimmer />
+      ) : (
+        <div className="flex mt-[2%] justify-center items-center flex-wrap gap-x-[20px] gap-y-[20px]">
+          {channelVideos?.items?.map((videoInfo) => (
+            <VideoSectionCard key={videoInfo?.id?.videoId} info={videoInfo} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

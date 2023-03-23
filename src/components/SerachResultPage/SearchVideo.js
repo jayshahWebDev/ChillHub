@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import ChannelCard from "./ChannelCard";
+import SearchPageShimmer from "./SearchPageShimmer";
 import VideoCard from "./VideoCard";
 
 const SearchVideo = () => {
@@ -21,14 +22,15 @@ const SearchVideo = () => {
     );
     let jsonData = await data.json();
     setSerachData(jsonData);
-    console.log("jsonData::", jsonData);
   };
 
   useEffect(() => {
     getSearchResult();
   }, [searchQuery.get("q")]);
 
-  return (
+  return !searchData ? (
+    <SearchPageShimmer />
+  ) : (
     <div className="mx-[4%] mt-[2%] laptop:mt-[1%] w-full flex flex-col justify-center items-center">
       <div className="w-full gap-y-[10px] laptop:w-[80%] flex flex-col justify-center items-center tablet:items-start tablet:gap-y-[20px]">
         {searchData?.items?.map((details) =>

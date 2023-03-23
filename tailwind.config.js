@@ -11,6 +11,7 @@ module.exports = {
         lightGray: "#78909c",
         serchButtonBg: "#f8f8f8",
         lightWhite: "#f2f2f2",
+        shimmerColor: "#f5f5f5",
       },
       screens: {
         tablet: "481px",

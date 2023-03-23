@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ErrorPage from "../../ErrorPage";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import useInfiniteScrolling from "../../utils/useInfiniteScrolling";
 import VideoCard from "./VideoCard";
+import VideoContainerShimmer from "./VideoContainerShimmer";
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState(null);
   const [videoInfo, setVideoInfo] = useState(null);
   const [pageToken, setPageToken] = useState(null);
   const [isFetching, setIsFetching] = useInfiniteScrolling(moreData);
+  const [error, setError] = useState(false);
 
   const ismenuOpen = useSelector((store) => store.app.ismenuOpen);
   const videoCategory = useSelector((store) => store.app.videoCategory);
@@ -39,13 +42,18 @@ const VideoContainer = () => {
   }
 
   const getVideoData = async () => {
-    const videoData = await fetch(
-      `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
-    );
-    const videoJson = await videoData.json();
-    setVideos(videoJson);
-    setVideoInfo(videoJson?.items);
-    setPageToken(videoJson?.nextPageToken);
+    try {
+      const videoData = await fetch(
+        `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
+      );
+      if (!videoData?.ok) throw new Error("Exceed Limit");
+      const videoJson = await videoData.json();
+      setVideos(videoJson);
+      setVideoInfo(videoJson?.items);
+      setPageToken(videoJson?.nextPageToken);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -53,8 +61,10 @@ const VideoContainer = () => {
     getVideoData();
   }, [videoCategory]);
 
+  if (error) return <ErrorPage />;
+
   return !videoInfo && !videos ? (
-    <h1>Loading</h1>
+    <VideoContainerShimmer />
   ) : (
     <div
       className={`mx-[2%] ${

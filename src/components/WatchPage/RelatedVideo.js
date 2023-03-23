@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import RelatedVideoCard from "./RelatedVideoCard";
+import WatchPageShimmer from "./WatchPageShimmer";
 
 const RelatedVideo = () => {
   const [searchParams] = useSearchParams();
@@ -28,7 +29,9 @@ const RelatedVideo = () => {
     getRelatedVideos();
   }, [searchParams]);
 
-  return (
+  return !relatedVideo ? (
+    <WatchPageShimmer />
+  ) : (
     <div className="laptop:w-[25%]">
       {relatedVideo?.map((videoInfo) => (
         <RelatedVideoCard key={videoInfo?.id?.videoId} info={videoInfo} />
