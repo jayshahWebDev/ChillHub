@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const viewSubCount = (countValue) => {
   let viewCount;
   if (countValue >= 1000000000) {
@@ -10,7 +12,36 @@ export const viewSubCount = (countValue) => {
   } else if (countValue >= 1000) {
     viewCount =
       new Intl.NumberFormat().format((countValue / 1000).toFixed(2)) + "K";
+  } else {
+    viewCount = countValue;
   }
 
   return viewCount;
+};
+
+export const convertDurationInHMS = (duration) => {
+  const videoduration = moment.duration(duration);
+  let videoLength;
+  if (videoduration?.hours() > 0) {
+    let minutes =
+      videoduration.minutes() >= 10
+        ? videoduration.minutes()
+        : `0${videoduration.minutes()}`;
+    let seconds =
+      videoduration.seconds() >= 10
+        ? videoduration.seconds()
+        : `0${videoduration.seconds()}`;
+    videoLength = `${videoduration?.hours()}:${minutes}:${seconds}`;
+  } else {
+    let seconds =
+      videoduration.seconds() >= 10
+        ? videoduration.seconds()
+        : `0${videoduration.seconds()}`;
+
+    videoLength =
+      videoduration.minutes() > 0
+        ? `${videoduration.minutes()}:${seconds}`
+        : `0:${seconds}`;
+  }
+  return videoLength;
 };

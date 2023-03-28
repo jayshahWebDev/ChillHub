@@ -57,7 +57,8 @@ const Sidebar = () => {
             key={category.name}
             onClick={() => {
               dispatch(selectCategory(category.name));
-              dispatch(setVideoCategory(category.videoCategoryId));
+              if (category?.videoCategoryId)
+                dispatch(setVideoCategory(category.videoCategoryId));
             }}
           >
             <SidebarItem

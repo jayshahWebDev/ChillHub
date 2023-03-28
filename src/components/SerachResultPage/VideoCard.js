@@ -18,7 +18,6 @@ const VideoCard = ({ videoInfo }) => {
     );
     let jsonData = await data.json();
     setVideoDetail(jsonData?.items?.[0]);
-    console.log("videoDetail::", jsonData?.items?.[0]);
   };
 
   useEffect(() => {

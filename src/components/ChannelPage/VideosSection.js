@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { viewSubCount } from "../../utils/commonFunctions";
+import {
+  convertDurationInHMS,
+  viewSubCount,
+} from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import moment from "moment";
 import VideoSectionShimmer from "./VideoSectionShimmer";
@@ -95,11 +98,9 @@ const VideoSectionCard = ({ info }) => {
     getVideoStatics();
   }, []);
 
-  const videoLength = videoStatics?.items?.[0]?.contentDetails?.duration
-    ?.replace("PT", "")
-    .replace("H", ":")
-    .replace("M", ":")
-    .replace("S", "");
+  const videoLength = convertDurationInHMS(
+    videoStatics?.items?.[0]?.contentDetails?.duration
+  );
 
   const videoPublishDate = moment(info?.snippet?.publishedAt).fromNow();
   const viewCount = viewSubCount(

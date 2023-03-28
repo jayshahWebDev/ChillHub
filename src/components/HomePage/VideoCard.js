@@ -1,18 +1,17 @@
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { viewSubCount } from "../../utils/commonFunctions";
+import {
+  convertDurationInHMS,
+  viewSubCount,
+} from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 
 const VideoCard = ({ info }) => {
   const [channel, setChannel] = useState(null);
   const navigate = useNavigate();
 
-  const videoLength = info?.contentDetails?.duration
-    ?.replace("PT", "")
-    .replace("H", ":")
-    .replace("M", ":")
-    .replace("S", "");
+  const videoLength = convertDurationInHMS(info?.contentDetails?.duration);
 
   const videoPublishDate = moment(info?.snippet?.publishedAt).fromNow();
 

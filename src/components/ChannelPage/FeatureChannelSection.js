@@ -30,6 +30,8 @@ const FeatureChannelSection = () => {
     getFeatureChannelData();
   }, []);
 
+  if (!featureChannel) return;
+
   return (
     <div className="mt-[2%] laptop:mt-[1%] tablet:flex tablet:gap-x-[25px]">
       {featureChannel && featureChannel.length > 0 ? (
