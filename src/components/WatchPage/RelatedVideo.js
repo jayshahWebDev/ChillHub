@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import RelatedVideoCard from "./RelatedVideoCard";
@@ -7,6 +8,9 @@ import WatchPageShimmer from "./WatchPageShimmer";
 const RelatedVideo = () => {
   const [searchParams] = useSearchParams();
   const [relatedVideo, setRelatedVideo] = useState(null);
+
+  const showMoreForMobile = useSelector((store) => store.app.showMore);
+  const showcommentForMobile = useSelector((store) => store.app.showComment);
 
   const getRelatedVideos = async () => {
     const options = {
@@ -32,7 +36,11 @@ const RelatedVideo = () => {
   return !relatedVideo ? (
     <WatchPageShimmer />
   ) : (
-    <div className="laptop:w-[25%]">
+    <div
+      className={`laptop:w-[25%] ${
+        showMoreForMobile || showcommentForMobile ? "overflow-hidden h-0" : ""
+      } laptop:overflow-auto laptop:h-fit`}
+    >
       {relatedVideo?.map((videoInfo) => (
         <RelatedVideoCard key={videoInfo?.id?.videoId} info={videoInfo} />
       ))}

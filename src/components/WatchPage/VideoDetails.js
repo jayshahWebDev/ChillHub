@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import CommentDetails from "./CommentDetails";
 
 const VideoDetails = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const VideoDetails = () => {
         allowFullScreen
         className="w-[100%] h-[250px] tablet:h-[400px] desktop:h-[600px] laptop:w-[95%]"
       ></iframe>
+      <CommentDetails />
     </div>
   );
 };
