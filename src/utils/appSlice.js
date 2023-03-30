@@ -1,10 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+let category = "Home";
+if (window.location.href.includes("history")) category = "History";
+if (window.location.href.includes("watchLater")) category = "Watch Later";
+
 const appSlice = createSlice({
   name: "app",
   initialState: {
     ismenuOpen: false,
-    selectedCategory: "Home",
+    selectedCategory: category,
     videoCategory: "0",
     isMobileSearchBarOpen: false,
     showMore: false,

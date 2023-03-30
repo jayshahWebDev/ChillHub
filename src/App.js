@@ -11,6 +11,8 @@ import SearchVideo from "./components/SerachResultPage/SearchVideo";
 import HomeSection from "./components/ChannelPage/HomeSection";
 import VideosSection from "./components/ChannelPage/VideosSection";
 import FeatureChannelSection from "./components/ChannelPage/FeatureChannelSection";
+import History from "./components/HistoryWatchLaterPage/History";
+import WatchLater from "./components/HistoryWatchLaterPage/WatchLater";
 
 const appRouter = createBrowserRouter([
   {
@@ -46,6 +48,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/search",
         element: <SearchVideo />,
+      },
+      {
+        path: "/history",
+        element: <History />,
+      },
+      {
+        path: "/watchLater",
+        element: <WatchLater />,
       },
     ],
   },

@@ -45,3 +45,16 @@ export const convertDurationInHMS = (duration) => {
   }
   return videoLength;
 };
+
+export const createVideoDetailObject = (videoDetail) => {
+  let videoData = {
+    id: videoDetail?.id,
+    thumbnail: videoDetail?.snippet?.thumbnails?.high?.url,
+    duration: videoDetail?.contentDetails?.duration,
+    title: videoDetail?.snippet?.title,
+    channelName: videoDetail?.snippet?.channelTitle,
+    view: videoDetail?.statistics?.viewCount,
+    description: videoDetail?.snippet?.description,
+  };
+  return videoData;
+};

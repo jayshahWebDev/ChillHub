@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   selectCategory,
   setVideoCategory,
@@ -14,6 +15,7 @@ const Sidebar = () => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSideBar = () => {
     dispatch(toggleMenu());
@@ -23,7 +25,7 @@ const Sidebar = () => {
   if (!ismenuOpen) return null;
 
   return (
-    <div className="fixed top-[60px] desktop:sticky desktop:top-[calc(2%+60px)] h-[100%] desktop:mt-[2%] z-50 bg-white w-[44%] tablet:w-[30%] laptop:w-[25%] desktop:w-[15%]">
+    <div className="fixed top-[62px] desktop:sticky  h-[calc(100vh-62px)] z-50 bg-white w-[44%] tablet:w-[30%] laptop:w-[25%] desktop:w-[15%]">
       {/* <div className="desktop:hidden">
         <div className=" flex gap-x-[10px] items-center ml-[7%] tablet:ml-[7%] laptop:ml-[8%] h-[60px]">
           <svg
@@ -57,8 +59,14 @@ const Sidebar = () => {
             key={category.name}
             onClick={() => {
               dispatch(selectCategory(category.name));
-              if (category?.videoCategoryId)
+              if (category?.videoCategoryId) {
                 dispatch(setVideoCategory(category.videoCategoryId));
+                navigate("/");
+              } else if (category?.name == "History") {
+                navigate("/history");
+              } else if (category?.name == "Watch Later") {
+                navigate("/watchLater");
+              }
             }}
           >
             <SidebarItem
