@@ -16,6 +16,7 @@ import {
 } from "../../utils/videoSlice";
 import DescriptionDetail from "./DescriptionDetail";
 import CommentModel from "./CommentModel";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const CommentDetails = () => {
   const [channelInfo, setChannelInfo] = useState(null);
@@ -106,9 +107,9 @@ const ChannelDetail = ({ channelDetail, videoDetail }) => {
           <div className=" flex justify-between items-center tablet:gap-x-[35px]">
             <div className="flex items-center gap-x-[10px]">
               <div>
-                <img
-                  className="h-[40px] w-[40px] rounded-full object-cover"
+                <ImgLazyLoad
                   src={channelDetail?.snippet?.thumbnails?.high?.url}
+                  style="h-[40px] w-[40px] rounded-full object-cover"
                 />
               </div>
               <div className="flex tablet:flex-col tablet:items-start gap-x-[5px] items-center">

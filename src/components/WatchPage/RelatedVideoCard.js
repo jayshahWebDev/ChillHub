@@ -3,6 +3,7 @@ import { viewSubCount } from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const RelatedVideoCard = ({ info }) => {
   const [statistics, setStatistics] = useState(null);
@@ -31,9 +32,9 @@ const RelatedVideoCard = ({ info }) => {
     <Link to={`/watch?v=${info?.id?.videoId}`}>
       <div className="mt-[10px] font-Roboto desktop:flex gap-x-[5px]">
         <div className="w-full desktop:w-[40%]">
-          <img
+          <ImgLazyLoad
             src={info?.snippet?.thumbnails?.high?.url}
-            className="w-full h-[200px] tablet:h-[350px] laptop:h-[150px] desktop:h-[100px] object-cover rounded-[10px]"
+            style="w-full h-[200px] tablet:h-[350px] laptop:h-[150px] desktop:h-[100px] object-cover rounded-[10px]"
           />
         </div>
         <div className="desktop:w-[60%]">

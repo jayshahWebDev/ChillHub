@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const FeatureChannelSection = () => {
   const [featureChannel, setFeatureChannel] = useState(null);
@@ -33,7 +34,7 @@ const FeatureChannelSection = () => {
   if (!featureChannel) return;
 
   return (
-    <div className="mt-[2%] laptop:mt-[1%] tablet:flex tablet:gap-x-[25px]">
+    <div className="mt-[2%] laptop:mt-[1%] tablet:flex tablet:flex-wrap tablet:gap-x-[25px]">
       {featureChannel && featureChannel.length > 0 ? (
         featureChannel?.[0]?.contentDetails?.channels?.map((id) => (
           <ChannelCard key={id} id={id} />
@@ -73,9 +74,9 @@ export const ChannelCard = ({ id }) => {
   return (
     <div className="flex gap-x-[15%] items-center mt-[20px] tablet:flex-col">
       <div>
-        <img
-          className="w-[60px] h-[60px] tablet:w-[100px] tablet:h-[100px] rounded-full"
+        <ImgLazyLoad
           src={channelDetail?.snippet?.thumbnails?.high?.url}
+          style="w-[60px] h-[60px] tablet:w-[100px] tablet:h-[100px] rounded-full"
         />
       </div>
       <div className="font-Roboto">

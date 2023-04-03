@@ -4,15 +4,16 @@ import {
   viewSubCount,
 } from "../../utils/commonFunctions";
 import { removeVideoFromWatchLater } from "../../utils/videoSlice";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const VideoCard = ({ videoDetail }) => {
   const dispatch = useDispatch();
   return (
     <div className="flex gap-x-[10px] font-Roboto w-fit">
       <div className="relative">
-        <img
+        <ImgLazyLoad
           src={videoDetail?.thumbnail}
-          className="h-[100px] w-[250px] tablet:h-[140px] tablet:w-[220px] rounded-[10px] object-cover"
+          style="h-[100px] w-[250px] tablet:h-[140px] tablet:w-[220px] rounded-[10px] object-cover"
         />
         <p className="absolute bottom-1 text-white right-1 text-[12px] font-medium rounded-[5px] px-[6px] py-[2px] bg-black">
           {convertDurationInHMS(videoDetail?.duration)}

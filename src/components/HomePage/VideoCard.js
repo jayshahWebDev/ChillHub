@@ -6,6 +6,7 @@ import {
   viewSubCount,
 } from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const VideoCard = ({ info }) => {
   const [channel, setChannel] = useState(null);
@@ -38,9 +39,9 @@ const VideoCard = ({ info }) => {
     <Link to={`/watch?v=${info?.id}`}>
       <div className="flex flex-col gap-y-[10px] font-Roboto cursor-pointer">
         <div className="relative">
-          <img
+          <ImgLazyLoad
             src={info?.snippet?.thumbnails?.standard?.url}
-            className="h-[180px] w-[300px] rounded-[10px] object-cover"
+            style="h-[180px] w-[300px] rounded-[10px] object-cover"
           />
 
           <div className="bg-black absolute right-1 bottom-2 rounded-[5px] px-[6px] py-[2px]">
@@ -48,14 +49,15 @@ const VideoCard = ({ info }) => {
           </div>
         </div>
         <div className="flex gap-x-[10px]">
-          <div>
-            <img
+          <div
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`channel/${info?.snippet?.channelId}/home`);
+            }}
+          >
+            <ImgLazyLoad
               src={channel?.items?.[0]?.snippet?.thumbnails?.high?.url}
-              className="h-[40px] w-[40px] rounded-full border-[1px]"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(`channel/${info?.snippet?.channelId}/home`);
-              }}
+              style="h-[40px] w-[40px] rounded-full border-[1px]"
             />
           </div>
           <div className="flex flex-col gap-y-[5px]">

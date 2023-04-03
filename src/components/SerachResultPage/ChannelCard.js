@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
 import { Link } from "react-router-dom";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const ChannelCard = ({ channelInfo }) => {
   const [channelDetails, setChannelDetails] = useState(null);
@@ -36,9 +37,9 @@ const ChannelCard = ({ channelInfo }) => {
         className="font-Roboto w-full flex justify-center items-center gap-x-[25px]"
       >
         <div className="tablet:w-[20%]">
-          <img
-            className="h-[70px] w-[70px] tablet:h-[100px] tablet:w-[100px] object-cover rounded-full"
+          <ImgLazyLoad
             src={channelInfo?.snippet?.thumbnails?.high?.url}
+            style="h-[70px] w-[70px] tablet:h-[100px] tablet:w-[100px] object-cover rounded-full"
           />
         </div>
         <div className="tablet:w-[80%]">

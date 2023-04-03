@@ -3,6 +3,7 @@ import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const VideoCard = ({ videoInfo }) => {
   const [videoDetail, setVideoDetail] = useState(null);
@@ -35,9 +36,9 @@ const VideoCard = ({ videoInfo }) => {
       className="font-Roboto tablet:flex tablet:w-full"
     >
       <div className="tablet:w-[44%] laptop:w-[41%] desktop:w-[30%]">
-        <img
+        <ImgLazyLoad
           src={videoDetail?.snippet?.thumbnails?.standard?.url}
-          className="h-[200px] w-[350px] tablet:h-[180px] tablet:w-[300px] rounded-[10px] object-cover"
+          style="h-[200px] w-[350px] tablet:h-[180px] tablet:w-[300px] rounded-[10px] object-cover"
         />
       </div>
       <div className="tablet:w-[56%] laptop:w-[59%] desktop:w-[70%]">

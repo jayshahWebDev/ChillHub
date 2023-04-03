@@ -1,5 +1,6 @@
 import moment from "moment";
 import likeIcon from "../../../assets/likeIcon.png";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const CommentCard = ({ commentDetail }) => {
   const {
@@ -13,9 +14,9 @@ const CommentCard = ({ commentDetail }) => {
   return (
     <div className="flex mx-[2%] mt-[10px] font-Roboto">
       <div className="w-[10%] tablet:w-[5%] desktop:w-[4%]">
-        <img
+        <ImgLazyLoad
           src={authorProfileImageUrl}
-          className="h-[30px] w-[30px] rounded-full"
+          style="h-[30px] w-[30px] rounded-full"
         />
       </div>
       <div className="w-[90%] tablet:w-[95%] desktop:w-[96%]">

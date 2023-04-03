@@ -1,4 +1,5 @@
 import { viewSubCount } from "../../utils/commonFunctions";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const ChannelDetailCard = ({ channelInfo }) => {
   const getSubCount = viewSubCount(
@@ -7,19 +8,19 @@ const ChannelDetailCard = ({ channelInfo }) => {
   return (
     <div className="font-Roboto">
       <div>
-        <img
+        <ImgLazyLoad
           src={
             channelInfo?.items?.[0]?.brandingSettings?.image?.bannerExternalUrl
           }
-          className="h-[60px] tablet:h-[80px] laptop:h-[120px] desktop:h-[190px] w-full object-cover"
+          style="h-[60px] tablet:h-[80px] laptop:h-[120px] desktop:h-[190px] w-full object-cover"
         />
       </div>
       <div className="flex flex-col tablet:flex-row gap-y-[8px] justify-center tablet:justify-between items-center">
         <div className="mt-[10px] flex flex-col tablet:flex-row tablet:gap-x-[10px] justify-center items-center ">
           <div>
-            <img
+            <ImgLazyLoad
               src={channelInfo?.items?.[0]?.snippet?.thumbnails?.high?.url}
-              className="h-[60px] w-[60px] tablet:h-[80px] tablet:w-[80px] rounded-full object-cover"
+              style="h-[60px] w-[60px] tablet:h-[80px] tablet:w-[80px] rounded-full object-cover"
             />
           </div>
           <div>

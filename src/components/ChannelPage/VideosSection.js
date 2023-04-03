@@ -7,6 +7,7 @@ import {
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import moment from "moment";
 import VideoSectionShimmer from "./VideoSectionShimmer";
+import ImgLazyLoad from "../ImgLazyLoad";
 
 const VideosSection = () => {
   const [videoSort, setVideoSort] = useState("date");
@@ -112,9 +113,9 @@ const VideoSectionCard = ({ info }) => {
       <Link to={`/watch?v=${info?.id?.videoId}`}>
         <div className="flex flex-col gap-y-[10px] font-Roboto cursor-pointer">
           <div className="relative">
-            <img
+            <ImgLazyLoad
               src={info?.snippet?.thumbnails?.high?.url}
-              className="h-[180px] w-[300px] rounded-[10px] object-cover"
+              style="h-[180px] w-[300px] rounded-[10px] object-cover"
             />
 
             <div className="bg-black absolute right-1 bottom-2 rounded-[5px] px-[6px] py-[2px]">
