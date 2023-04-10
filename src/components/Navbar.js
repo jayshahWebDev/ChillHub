@@ -24,12 +24,22 @@ const Navbar = () => {
   };
 
   const getSuggestionOfSearch = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": "b00667d971msha9aa6f0c97c016fp117cdajsn3d00ee7dcb35",
+        "X-RapidAPI-Host": "youtube-v38.p.rapidapi.com",
+      },
+    };
+
     let data = await fetch(
-      `https://corsanywhere.herokuapp.com/http://suggestqueries.google.com/complete/search?client=firefox&ds=yt&q=${searchQuery}`
+      `https://youtube-v38.p.rapidapi.com/auto-complete/?q=${searchQuery}&hl=en&gl=US`,
+      options
     );
     let jsonData = await data.json();
-    setSuggestionSearch(jsonData?.[1]);
-    dispatch(caching({ [searchQuery]: jsonData?.[1] }));
+    const filterArray = jsonData?.results?.slice(0, 11);
+    setSuggestionSearch(filterArray);
+    dispatch(caching({ [searchQuery]: filterArray }));
   };
 
   useEffect(() => {
