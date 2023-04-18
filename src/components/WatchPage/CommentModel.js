@@ -52,7 +52,7 @@ const CommentModel = ({ videoId }) => {
         <hr className="border w-full mt-[5px]" />
       </div>
       {comments?.map((comment) => (
-        <CommentCard commentDetail={comment} />
+        <CommentCard key={comment?.id} commentDetail={comment} />
       ))}
     </div>
   );

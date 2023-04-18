@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import { toggleMenu, toggleMobileSearchBar } from "../utils/appSlice";
+import {
+  selectCategory,
+  setVideoCategory,
+  toggleMenu,
+  toggleMobileSearchBar,
+} from "../utils/appSlice";
 import { caching } from "../utils/searchSlice";
 import logo from "../../assets/logo.png";
 
@@ -72,7 +77,13 @@ const Navbar = () => {
           >
             <path d="M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z"></path>
           </svg>
-          <Link to="/">
+          <Link
+            to="/"
+            onClick={() => {
+              dispatch(selectCategory("Home"));
+              dispatch(setVideoCategory(0));
+            }}
+          >
             <div className="flex gap-x-[5px] justify-center items-center cursor-pointer">
               <img src={logo} className="h-[35px]" />
               <p className="font-Roboto font-semibold tracking-tight text-[20px]">
