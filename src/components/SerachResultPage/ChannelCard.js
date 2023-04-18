@@ -33,7 +33,7 @@ const ChannelCard = ({ channelInfo }) => {
   return (
     <>
       <Link
-        to={`/channel/${channelInfo?.id?.channelId}`}
+        to={`/channel/${channelInfo?.id?.channelId}/home`}
         className="font-Roboto w-full flex justify-center items-center gap-x-[25px]"
       >
         <div className="tablet:w-[20%]">

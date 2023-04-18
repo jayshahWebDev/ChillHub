@@ -28,7 +28,12 @@ const ChannelPage = () => {
   return (
     <div className="mx-[2%] mt-[2%] w-full">
       <ChannelDetailCard channelInfo={channelDetail} />
-      <ChannelSection />
+      <ChannelSection
+        trailerDetail={
+          channelDetail?.items?.[0]?.brandingSettings?.channel
+            ?.unsubscribedTrailer
+        }
+      />
     </div>
   );
 };

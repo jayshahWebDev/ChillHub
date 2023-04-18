@@ -1,6 +1,6 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 
-const ChannelSection = () => {
+const ChannelSection = ({ trailerDetail }) => {
   const { id } = useParams();
 
   return (
@@ -41,7 +41,7 @@ const ChannelSection = () => {
         </Link>
       </div>
       <hr className="mt-[10px]" />
-      <Outlet />
+      <Outlet context={[trailerDetail]} />
     </div>
   );
 };

@@ -27,7 +27,7 @@ const Navbar = () => {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "b00667d971msha9aa6f0c97c016fp117cdajsn3d00ee7dcb35",
+        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
         "X-RapidAPI-Host": "youtube-v38.p.rapidapi.com",
       },
     };
