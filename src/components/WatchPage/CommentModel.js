@@ -7,7 +7,6 @@ import CommentCard from "./CommentCard";
 const CommentModel = ({ videoId }) => {
   const [comments, setComments] = useState(null);
   const dispatch = useDispatch();
-  console.log("videoId::", videoId);
 
   const getCommentDetails = async () => {
     try {
@@ -22,14 +21,13 @@ const CommentModel = ({ videoId }) => {
         `${YOUTUBE_API_URL}/commentThreads?` + new URLSearchParams(options)
       );
       const jsonData = await data.json();
-      console.log("jsonData:::", jsonData);
       setComments(jsonData?.items);
     } catch (error) {}
   };
 
   useEffect(() => {
     getCommentDetails();
-  }, []);
+  }, [videoId]);
 
   if (!comments) return;
 

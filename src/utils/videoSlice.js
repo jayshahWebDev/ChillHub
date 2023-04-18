@@ -19,7 +19,7 @@ const videoSlice = createSlice({
           return;
         }
       }
-      state.videoHistory.push(action.payload);
+      state.videoHistory.unshift(action.payload);
     },
     addVideoInWatchLater: (state, action) => {
       state.watchLaterVideo.push(action.payload);

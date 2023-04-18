@@ -52,7 +52,7 @@ const CommentDetails = () => {
 
   useEffect(() => {
     getChannelAndVideoDetails();
-  }, []);
+  }, [searchParams.get("v")]);
 
   if (!channelInfo && !videoInfo) return;
 
