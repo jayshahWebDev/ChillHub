@@ -3,27 +3,34 @@ import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
 import { Link } from "react-router-dom";
 import ImgLazyLoad from "../ImgLazyLoad";
+import ErrorPage from "../../ErrorPage";
 
 const ChannelCard = ({ channelInfo }) => {
   const [channelDetails, setChannelDetails] = useState(null);
+  const [error, setError] = useState(false);
 
   const getChannelDetails = async () => {
-    let options = {
-      part: "snippet,statistics",
-      id: channelInfo?.id?.channelId,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
-    let data = await fetch(
-      `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
-    );
-    let jsonData = await data.json();
-    setChannelDetails(jsonData?.items?.[0]);
+    try {
+      let options = {
+        part: "snippet,statistics",
+        id: channelInfo?.id?.channelId,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
+      let data = await fetch(
+        `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
+      );
+      let jsonData = await data.json();
+      setChannelDetails(jsonData?.items?.[0]);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getChannelDetails();
   }, []);
 
+  if (error) return <ErrorPage />;
   if (!channelDetails) return;
 
   const subscriberCount = viewSubCount(

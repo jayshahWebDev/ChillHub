@@ -12,27 +12,34 @@ import ImgLazyLoad from "../ImgLazyLoad";
 const VideosSection = () => {
   const [videoSort, setVideoSort] = useState("date");
   const [channelVideos, setChannelVideos] = useState(null);
+  const [error, setError] = useState(false);
   const { id } = useParams();
 
   const getChannelVideos = async () => {
-    const options = {
-      part: "snippet",
-      channelId: id,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-      maxResults: 20,
-      type: "video",
-      order: videoSort,
-    };
-    const data = await fetch(
-      `${YOUTUBE_API_URL}/search?` + new URLSearchParams(options)
-    );
-    const jsonData = await data.json();
-    setChannelVideos(jsonData);
+    try {
+      const options = {
+        part: "snippet",
+        channelId: id,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+        maxResults: 20,
+        type: "video",
+        order: videoSort,
+      };
+      const data = await fetch(
+        `${YOUTUBE_API_URL}/search?` + new URLSearchParams(options)
+      );
+      const jsonData = await data.json();
+      setChannelVideos(jsonData);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getChannelVideos();
   }, [videoSort]);
+
+  if (error) return <ErrorPage />;
 
   return (
     <div className="mt-[2%] laptop:mt-[1%]">

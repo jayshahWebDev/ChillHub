@@ -9,11 +9,13 @@ import {
 } from "../utils/appSlice";
 import { caching } from "../utils/searchSlice";
 import logo from "../../assets/logo.png";
+import ErrorPage from "../ErrorPage";
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestionSearch, setSuggestionSearch] = useState(null);
   const [showSuggestion, setShowSuggestion] = useState(false);
+  const [error, setError] = useState(false);
   const [search] = useSearchParams();
 
   const isMobileSearchOpen = useSelector((store) => {
@@ -29,23 +31,29 @@ const Navbar = () => {
   };
 
   const getSuggestionOfSearch = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-        "X-RapidAPI-Host": "youtube-v38.p.rapidapi.com",
-      },
-    };
+    try {
+      const options = {
+        method: "GET",
+        headers: {
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
+          "X-RapidAPI-Host": "youtube-v38.p.rapidapi.com",
+        },
+      };
 
-    let data = await fetch(
-      `https://youtube-v38.p.rapidapi.com/auto-complete/?q=${searchQuery}&hl=en&gl=US`,
-      options
-    );
-    let jsonData = await data.json();
-    const filterArray = jsonData?.results?.slice(0, 11);
-    setSuggestionSearch(filterArray);
-    dispatch(caching({ [searchQuery]: filterArray }));
+      let data = await fetch(
+        `https://youtube-v38.p.rapidapi.com/auto-complete/?q=${searchQuery}&hl=en&gl=US`,
+        options
+      );
+      let jsonData = await data.json();
+      const filterArray = jsonData?.results?.slice(0, 11);
+      setSuggestionSearch(filterArray);
+      dispatch(caching({ [searchQuery]: filterArray }));
+    } catch (error) {
+      setError(true);
+    }
   };
+
+  if (error) return <ErrorPage />;
 
   useEffect(() => {
     if (search.get("q")) setSearchQuery(search.get("q"));

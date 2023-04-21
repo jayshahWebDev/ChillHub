@@ -7,9 +7,11 @@ import {
 } from "../../utils/commonFunctions";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import ImgLazyLoad from "../ImgLazyLoad";
+import ErrorPage from "../../ErrorPage";
 
 const VideoCard = ({ info }) => {
   const [channel, setChannel] = useState(null);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const videoLength = convertDurationInHMS(info?.contentDetails?.duration);
@@ -19,21 +21,27 @@ const VideoCard = ({ info }) => {
   const viewCount = viewSubCount(info?.statistics?.viewCount);
 
   const getChannelDetail = async () => {
-    const options = {
-      part: "snippet,contentDetails,statistics",
-      id: info?.snippet?.channelId,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
-    const channelDetails = await fetch(
-      `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
-    );
-    const channelDetailsJson = await channelDetails.json();
-    setChannel(channelDetailsJson);
+    try {
+      const options = {
+        part: "snippet,contentDetails,statistics",
+        id: info?.snippet?.channelId,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
+      const channelDetails = await fetch(
+        `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
+      );
+      const channelDetailsJson = await channelDetails.json();
+      setChannel(channelDetailsJson);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getChannelDetail();
   }, []);
+
+  if (error) return <ErrorPage />;
 
   return (
     <Link to={`/watch?v=${info?.id}`}>

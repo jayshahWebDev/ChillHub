@@ -4,27 +4,34 @@ import { viewSubCount } from "../../utils/commonFunctions";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import ImgLazyLoad from "../ImgLazyLoad";
+import ErrorPage from "../../ErrorPage";
 
 const VideoCard = ({ videoInfo }) => {
   const [videoDetail, setVideoDetail] = useState(null);
+  const [error, setError] = useState(false);
 
   const getVideoDetails = async () => {
-    let options = {
-      part: "snippet,contentDetails,statistics",
-      id: videoInfo?.id?.videoId,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
-    let data = await fetch(
-      `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
-    );
-    let jsonData = await data.json();
-    setVideoDetail(jsonData?.items?.[0]);
+    try {
+      let options = {
+        part: "snippet,contentDetails,statistics",
+        id: videoInfo?.id?.videoId,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
+      let data = await fetch(
+        `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
+      );
+      let jsonData = await data.json();
+      setVideoDetail(jsonData?.items?.[0]);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getVideoDetails();
   }, []);
 
+  if (error) return <ErrorPage />;
   if (!videoDetail) return;
 
   const viewCount = viewSubCount(videoDetail?.statistics?.viewCount);

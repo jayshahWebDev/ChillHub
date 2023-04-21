@@ -3,28 +3,35 @@ import { useOutletContext } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
 import moment from "moment";
+import ErrorPage from "../../ErrorPage";
 
 const HomeSection = () => {
   const [trailerDetail] = useOutletContext();
   const [trailerVideoDetail, setTrailerVideoDetail] = useState(null);
+  const [error, setError] = useState(false);
   const getTrailerVideoDetail = async () => {
-    let options = {
-      part: "snippet,statistics",
-      type: "video",
-      id: trailerDetail,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
-    let data = await fetch(
-      `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
-    );
-    let jsonData = await data.json();
-    setTrailerVideoDetail(jsonData?.items?.[0]);
+    try {
+      let options = {
+        part: "snippet,statistics",
+        type: "video",
+        id: trailerDetail,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
+      let data = await fetch(
+        `${YOUTUBE_API_URL}/videos?` + new URLSearchParams(options)
+      );
+      let jsonData = await data.json();
+      setTrailerVideoDetail(jsonData?.items?.[0]);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getTrailerVideoDetail();
   }, [trailerDetail]);
 
+  if (error) return <ErrorPage />;
   if (!trailerVideoDetail) return;
 
   const videoPublishDate = moment(

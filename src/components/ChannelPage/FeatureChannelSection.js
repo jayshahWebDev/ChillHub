@@ -3,34 +3,41 @@ import { useParams } from "react-router-dom";
 import { YOUTUBE_API_URL } from "../../utils/constatnt";
 import { viewSubCount } from "../../utils/commonFunctions";
 import ImgLazyLoad from "../ImgLazyLoad";
+import ErrorPage from "../../ErrorPage";
 
 const FeatureChannelSection = () => {
   const [featureChannel, setFeatureChannel] = useState(null);
+  const [error, setError] = useState(false);
   const { id } = useParams();
 
   const getFeatureChannelData = async () => {
-    const options = {
-      part: "contentDetails,snippet",
-      channelId: id,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
+    try {
+      const options = {
+        part: "contentDetails,snippet",
+        channelId: id,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
 
-    const data = await fetch(
-      `${YOUTUBE_API_URL}/channelSections?` + new URLSearchParams(options)
-    );
-    const jsonData = await data.json();
-    const filterChannels = jsonData?.items?.filter((data) => {
-      if (data?.snippet?.type === "multiplechannels") {
-        return data?.contentDetails?.channels;
-      }
-    });
-    setFeatureChannel(filterChannels);
+      const data = await fetch(
+        `${YOUTUBE_API_URL}/channelSections?` + new URLSearchParams(options)
+      );
+      const jsonData = await data.json();
+      const filterChannels = jsonData?.items?.filter((data) => {
+        if (data?.snippet?.type === "multiplechannels") {
+          return data?.contentDetails?.channels;
+        }
+      });
+      setFeatureChannel(filterChannels);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getFeatureChannelData();
   }, []);
 
+  if (error) return <ErrorPage />;
   if (!featureChannel) return;
 
   return (
@@ -50,24 +57,31 @@ const FeatureChannelSection = () => {
 
 export const ChannelCard = ({ id }) => {
   const [channelDetail, setChannelDetail] = useState(null);
+  const [error, setError] = useState(false);
 
   const getChannelDetails = async () => {
-    const options = {
-      part: "snippet,statistics",
-      id,
-      key: process.env.REACT_APP_YOUTUBE_API_KEY,
-    };
+    try {
+      const options = {
+        part: "snippet,statistics",
+        id,
+        key: process.env.REACT_APP_YOUTUBE_API_KEY,
+      };
 
-    const data = await fetch(
-      `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
-    );
-    const jsonData = await data.json();
-    setChannelDetail(jsonData?.items?.[0]);
+      const data = await fetch(
+        `${YOUTUBE_API_URL}/channels?` + new URLSearchParams(options)
+      );
+      const jsonData = await data.json();
+      setChannelDetail(jsonData?.items?.[0]);
+    } catch (error) {
+      setError(true);
+    }
   };
 
   useEffect(() => {
     getChannelDetails();
   }, []);
+
+  if (error) return <ErrorPage />;
 
   const getSubCount = viewSubCount(channelDetail?.statistics?.subscriberCount);
 
