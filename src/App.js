@@ -1,18 +1,26 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/HomePage/Home";
 import { Provider } from "react-redux";
 import store from "./utils/store";
-import ChannelPage from "./components/ChannelPage/ChannelPage";
 import WatchVideo from "./components/WatchPage/WatchVideo";
 import VideoContainer from "./components/HomePage/VideoContainer";
-import SearchVideo from "./components/SerachResultPage/SearchVideo";
 import HomeSection from "./components/ChannelPage/HomeSection";
 import VideosSection from "./components/ChannelPage/VideosSection";
 import FeatureChannelSection from "./components/ChannelPage/FeatureChannelSection";
-import History from "./components/HistoryWatchLaterPage/History";
-import WatchLater from "./components/HistoryWatchLaterPage/WatchLater";
+import SearchPageShimmer from "./components/SerachResultPage/SearchPageShimmer";
+
+const History = lazy(() =>
+  import("./components/HistoryWatchLaterPage/History")
+);
+const WatchLater = lazy(() =>
+  import("./components/HistoryWatchLaterPage/WatchLater")
+);
+const ChannelPage = lazy(() => import("./components/ChannelPage/ChannelPage"));
+const SearchVideo = lazy(() =>
+  import("./components/SerachResultPage/SearchVideo")
+);
 
 const appRouter = createBrowserRouter([
   {
@@ -25,7 +33,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/channel/:id",
-        element: <ChannelPage />,
+        element: (
+          <Suspense>
+            <ChannelPage />
+          </Suspense>
+        ),
         children: [
           {
             path: "/channel/:id/home",
@@ -47,15 +59,27 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/search",
-        element: <SearchVideo />,
+        element: (
+          <Suspense fallback={<SearchPageShimmer />}>
+            <SearchVideo />
+          </Suspense>
+        ),
       },
       {
         path: "/history",
-        element: <History />,
+        element: (
+          <Suspense>
+            <History />
+          </Suspense>
+        ),
       },
       {
         path: "/watchLater",
-        element: <WatchLater />,
+        element: (
+          <Suspense>
+            <WatchLater />
+          </Suspense>
+        ),
       },
     ],
   },
