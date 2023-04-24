@@ -10,6 +10,7 @@ import HomeSection from "./components/ChannelPage/HomeSection";
 import VideosSection from "./components/ChannelPage/VideosSection";
 import FeatureChannelSection from "./components/ChannelPage/FeatureChannelSection";
 import SearchPageShimmer from "./components/SerachResultPage/SearchPageShimmer";
+import NotFoundPage from "./NotFoundPage";
 
 const History = lazy(() =>
   import("./components/HistoryWatchLaterPage/History")
@@ -82,6 +83,10 @@ const appRouter = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 
