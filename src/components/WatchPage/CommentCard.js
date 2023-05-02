@@ -24,7 +24,10 @@ const CommentCard = ({ commentDetail }) => {
           <p className="text-[13px] font-medium">{authorDisplayName}</p>
           <p className="text-[13px]">{videoPublishDate}</p>
         </div>
-        <p className="text-[15px] line-clamp-4">{textDisplay}</p>
+        <p
+          className="text-[15px] line-clamp-4"
+          dangerouslySetInnerHTML={{ __html: textDisplay }}
+        ></p>
         <div className="flex gap-x-[5px] mt-[5px]">
           <img src={likeIcon} className="h-[20px]" />
           <p className="text-[15px]">{likeCount > 0 ? likeCount : ""}</p>
